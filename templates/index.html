@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Developer Task Success Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Developer Task Success Predictor</h1>
+        <p class="subtitle">Enter a developer's daily stats to predict whether the task will succeed.</p>
+
+        <form method="POST">
+            {% for feat in features %}
+            <div class="form-group">
+                <label for="{{ feat }}">{{ feat.replace('_', ' ') }}</label>
+                <input type="number" step="any" name="{{ feat }}" id="{{ feat }}" required>
+            </div>
+            {% endfor %}
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if error %}
+            <div class="result error">{{ error }}</div>
+        {% endif %}
+
+        {% if prediction %}
+            <div class="result {{ 'success' if prediction == 'Success' else 'fail' }}">
+                <h2>Prediction: {{ prediction }}</h2>
+                <p>Confidence of success: {{ probability }}%</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
