@@ -4,11 +4,11 @@ import numpy as np
 
 app = Flask(__name__)
 
-# Load the trained model and scaler (created by train_model.py)
+
 model = joblib.load("logistic_regression_model.pkl")
 scaler = joblib.load("scaler.pkl")
 
-# Must match the exact order used during training
+
 FEATURES = [
     "Hours_Coding",
     "AI_Usage_Hours",
@@ -34,7 +34,7 @@ def index():
             scaled_input = scaler.transform(input_array)
 
             pred = model.predict(scaled_input)[0]
-            proba = model.predict_proba(scaled_input)[0][1]  # P(Task_Success = 1)
+            proba = model.predict_proba(scaled_input)[0][1]  
 
             prediction = "Success" if pred == 1 else "Not Successful"
             probability = round(proba * 100, 2)
